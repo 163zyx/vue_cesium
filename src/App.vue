@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div class="common-layout">
     <el-container>
-        <el-header>Header</el-header>
-        <el-container>
-          <el-aside width="200px">Aside</el-aside>
-          <el-main>Main</el-main>
-        </el-container>
+      <el-aside class="layout-menu">Aside</el-aside>
+      <el-container>
+        <el-header class="layout-header">Header</el-header>
+        <el-main class="layout-main">Main</el-main>
       </el-container>
+    </el-container>
   </div>
 </template>
 
@@ -14,6 +14,24 @@
 
 </script>
 
-<style lang="" scoped>
-
+<style lang="scss" scoped>
+.common-layout{
+  .layout-menu{
+    color: white;
+    border-right: 1px solid #E4E7ED;
+    width: 260px ;
+    height: 100vh;
+    background-color:#001529 ;
+  }
+  .layout-header{
+    color: white;
+    height: 50px;
+    background-color: cadetblue ;
+  }
+  .layout-main{
+    color: white;
+    height: 50px;
+    background-color: cornflowerblue ;
+  }
+}
 </style>

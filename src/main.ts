@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+import router from './router/index'
 
 // 导入全局样式表(静态)
 import '@/styles/global.css'
@@ -10,5 +11,6 @@ import 'element-plus/dist/index.css'
 
 
 const app = createApp(App)
+app.use(router)
 app.use(ElementPlus)
 app.mount('#app')
