@@ -3,14 +3,16 @@
     <el-container>
       <el-aside class="layout-menu">
         <el-menu
-          :default-active="activeIndex"
+          :default-active="$route.path"
           class="el-menu-vertical-demo"
           mode="vertical"
+          router
           @select="handleSelect"
         >
-          <el-menu-item index="1">
-            <el-icon><location /></el-icon>
-            地图</el-menu-item>
+        <el-sub-menu index="index">
+            <template #title>地图</template>
+            <el-menu-item index="cesium">地图初始化</el-menu-item>
+          </el-sub-menu>
           <el-sub-menu index="2">
             <template #title>矢量数据添加</template>
             <el-menu-item index="2-1">点</el-menu-item>
@@ -21,7 +23,9 @@
       </el-aside>
       <el-container>
         <el-header class="layout-header">Header</el-header>
-        <el-main class="layout-main">Main</el-main>
+        <el-main class="layout-main">
+          <router-view />
+        </el-main>
       </el-container>
     </el-container>
   </div>
