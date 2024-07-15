@@ -1,37 +1,31 @@
 <template>
-  <div class="common-layout">
-    <el-container>
-      <el-aside class="layout-menu">Aside</el-aside>
-      <el-container>
-        <el-header class="layout-header">Header</el-header>
-        <el-main class="layout-main">Main</el-main>
-      </el-container>
-    </el-container>
+  <div id="app">
+    <router-view/>
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" name="App">
 
 </script>
 
 <style lang="scss" scoped>
-.common-layout{
-  .layout-menu{
-    color: white;
-    border-right: 1px solid #E4E7ED;
-    width: 260px ;
-    height: 100vh;
-    background-color:#001529 ;
+  body{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
   }
-  .layout-header{
-    color: white;
-    height: 50px;
-    background-color: cadetblue ;
+  #app {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
   }
-  .layout-main{
-    color: white;
-    height: 50px;
-    background-color: cornflowerblue ;
-  }
-}
 </style>

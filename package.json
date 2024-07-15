@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "element-plus": "^2.7.7",
+    "unplugin-vue-setup-extend-plus": "^1.0.1",
     "vue": "^3.4.29",
     "vue-router": "^4.4.0"
   },

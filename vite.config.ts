@@ -3,9 +3,9 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
+import vueSetupExtend from 'unplugin-vue-setup-extend-plus/vite'
 import path from 'path'
 
-// https://vitejs.dev/config/
 export default defineConfig({
   css: {
     preprocessorOptions: {
@@ -18,13 +18,10 @@ export default defineConfig({
   plugins: [
     vue(),
     vueDevTools(),
+    vueSetupExtend({
+      enableAutoExpose: true
+    }),
   ],
-  // 配置src别名
-  // resolve: {
-  //   alias: {
-  //     '@': fileURLToPath(new URL('./src', import.meta.url))
-  //   }
-  // }
   // 配置src别名
   resolve: {
     alias: {
