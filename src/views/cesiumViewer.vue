@@ -1,26 +1,19 @@
 <template>
-  <div id="viewerDiv"></div>
+	<div id="globe"></div>
 </template>
 
 <script setup lang="ts">
-  import * as Cesium from "cesium";
-  import { onMounted, getCurrentInstance } from "vue";
-  let viewer: Cesium.Viewer;
- 
-  function createViewer() {
-      viewer = new Cesium.Viewer("viewerDiv", {
-      })
-  }
-  
-  onMounted(() => {
-      createViewer();
-  })
+import { onMounted } from "vue";
+import * as Cesium from "cesium";
+
+onMounted(() => {
+	const viewer = new Cesium.Viewer("globe");
+});
 </script>
 
 <style lang="scss" scoped>
-  #viewerDiv {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-  }
+#globe {
+	width: 100%;
+	height: 100%;
+}
 </style>

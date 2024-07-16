@@ -11,7 +11,7 @@
         >
         <el-sub-menu index="index">
             <template #title>地图</template>
-            <el-menu-item index="cesium">地图初始化</el-menu-item>
+            <el-menu-item index="index/cesium">地图初始化</el-menu-item>
           </el-sub-menu>
           <el-sub-menu index="2">
             <template #title>矢量数据添加</template>
@@ -33,10 +33,6 @@
 </template>
 
 <script setup lang="ts" name="Home">
-  import { ref } from 'vue'
-  // 图标引入
-  import { Location } from '@element-plus/icons-vue'
-  const activeIndex = ref('1')
   const handleSelect = (key: string, keyPath: string[]) => {
     console.log(key, keyPath)
   }

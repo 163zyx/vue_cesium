@@ -9,12 +9,14 @@ import '@/styles/global.css'
 import ElementPlus from 'element-plus' 
 import 'element-plus/dist/index.css'
 
-// 引入cesium
-import * as Cesium from 'cesium'
+import "cesium/Build/Cesium/Widgets/widgets.css";
 
+import * as Cesium from "cesium";
 
-// window.CESIUM_BASE_URL = "/cesium";
-Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIxODJlMmFiZC0xNTIyLTQ4ZTEtOWU1Zi0yMzczZTY5ZTc1ZWYiLCJpZCI6MTI3OTQzLCJpYXQiOjE2NzgzNDQ0MjR9.aowNZ19N7EJ1bmsvJ_mSnVDQsVdT9pzxwU-apT1P_6A"
+(window as any).CESIUM_BASE_URL = "/Cesium"; 
+
+Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiM2Y1Y2E1ZS1jMGE5LTQxZmEtOWUxYS04ZDZmYzk2NTQ5YTkiLCJpZCI6MTI3OTQzLCJpYXQiOjE3MjEwOTgxMzN9.afzXMWyvqKIqBgx6ejQpxjKGoZWXcAg4Kyipd7UX1Io";
+
 
 const app = createApp(App)
 app.use(router)
