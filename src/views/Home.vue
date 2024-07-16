@@ -3,15 +3,14 @@
     <el-container>
       <el-aside class="layout-menu">
         <el-menu
-          :default-active="$route.path"
+          :default-active="activeIndex"
           class="el-menu-vertical-demo"
           mode="vertical"
-          router
           @select="handleSelect"
         >
-        <el-sub-menu index="index">
+        <el-sub-menu index="/index">
             <template #title>地图</template>
-            <el-menu-item index="index/cesium">地图初始化</el-menu-item>
+            <el-menu-item index="/index/cesium">地图初始化</el-menu-item>
           </el-sub-menu>
           <el-sub-menu index="2">
             <template #title>矢量数据添加</template>
@@ -29,13 +28,18 @@
       </el-container>
     </el-container>
   </div>
-  <router-view/>
 </template>
 
 <script setup lang="ts" name="Home">
-  const handleSelect = (key: string, keyPath: string[]) => {
-    console.log(key, keyPath)
-  }
+  import { ref } from 'vue'
+  import { useRouter } from 'vue-router';
+  let activeIndex = ref('/index');
+  let router = useRouter();
+
+  let handleSelect = (index:string) => {
+    console.log("index",index)
+    router.push(index);
+  };
 </script>
 
 <style lang="scss" scoped>

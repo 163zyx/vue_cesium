@@ -12,7 +12,7 @@ const routes: Array<RouteRecordRaw>= [
     component: () => import('@/views/Home.vue'),
     children: [
       {
-        path: '/cesium',
+        path: 'cesium',
         component: () => import('@/views/cesiumViewer.vue'),
       }
     ]
