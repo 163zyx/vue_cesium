@@ -1,8 +1,6 @@
 import {createRouter, createWebHistory} from 'vue-router'
 // RouteRecordRaw 内置的接口类型
 import type { RouteRecordRaw } from 'vue-router'
-import Home from '@/views/Home.vue'
-import globelViewer from '@/views/cesiumViewer.vue'
 
 const routes: Array<RouteRecordRaw>= [
   {
@@ -11,11 +9,11 @@ const routes: Array<RouteRecordRaw>= [
   },
   {
     path: '/index',
-    component: Home,
+    component: () => import('@/views/Home.vue'),
     children: [
       {
         path: '/cesium',
-        component: globelViewer,
+        component: () => import('@/views/cesiumViewer.vue'),
       }
     ]
   },
