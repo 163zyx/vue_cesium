@@ -1,12 +1,11 @@
 <template>
   <div id="app">
-    <!-- <router-view/> -->
-     <globelViewer/>
+    <router-view></router-view>
   </div>
 </template>
 
 <script setup lang="ts" name="App">
-import globelViewer from '@/views/cesiumViewer.vue'
+
 </script>
 
 <style lang="scss" scoped>
