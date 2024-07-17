@@ -14,7 +14,15 @@ const routes: Array<RouteRecordRaw>= [
       {
         path: 'cesium',
         component: () => import('@/views/cesiumViewer.vue'),
-      }
+      },
+      {
+        path: 'tdt',
+        component: () => import('@/views/TdtViewer.vue'),
+      },
+      {
+        path: 'gaode',
+        component: () => import('@/views/GdViewer.vue'),
+      },
     ]
   },
 ]
