@@ -10,7 +10,9 @@
         >
         <el-sub-menu index="/index">
             <template #title>地图</template>
-            <el-menu-item index="/index/cesium">地图初始化</el-menu-item>
+            <el-menu-item index="/index/cesium">地球初始化</el-menu-item>
+            <el-menu-item index="/index/tdt">天地图</el-menu-item>
+            <el-menu-item index="/index/gaode">高德地图</el-menu-item>
           </el-sub-menu>
           <el-sub-menu index="2">
             <template #title>矢量数据添加</template>
