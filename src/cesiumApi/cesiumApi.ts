@@ -20,6 +20,9 @@ export function loadGlobe(val:string) {
     });
     //去除版权信息
     (viewer.cesiumWidget.creditContainer as HTMLElement).style.display = "none";
+    // // 获取比例 渲染清晰 抗锯齿
+    // viewer.resolutionScale = window.devicePixelRatio;
+    // viewer.scene.postProcessStages.fxaa.enabled = true;
     //设置该属性为true之后，标绘将位于地形的顶部
     // viewer.scene.globe.depthTestAgainstTerrain = true
   }
