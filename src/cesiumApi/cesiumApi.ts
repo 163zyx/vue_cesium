@@ -1,7 +1,8 @@
 import * as Cesium from "cesium";
 import { ref } from "vue";
 
-let viewer = ref();
+export let viewer = ref();
+export let dataSource = ref();
 
 // 天地图Token
 let tdtToken:string ='472d058f4ce357f09abb3e8dcbc71e7e'
@@ -100,7 +101,7 @@ export function loadTdtShpNote() {
 
 
 // 加载高德百度地图图层 
-export function loadGaoDeShp(){
+export function loadGaoDeShp() {
   //加载高德/百度影像地图，UrlTemplateImageryProvider该接口是加载谷歌地图服务的接口
 	viewer.value.imageryLayers.addImageryProvider(
 		new (Cesium.UrlTemplateImageryProvider as any)({
@@ -122,4 +123,65 @@ export function loadGaoDeShp(){
 			tileMatrixSetID: 'GoogleMapsCompatible',
 		})
 	)
+}
+
+// 添加dataSource
+export function loadDataSource() {
+  dataSource.value = new Cesium.CustomDataSource('myData')
+  viewer.value.dataSources.add(dataSource.value)
+}
+
+// 添加点位属性接口
+interface IAddPoint {
+  lon: number | string;
+  lat: number | string;
+  [propName: string]:any;
+}
+// 将字符串转化为浮点数函数
+function outputFloat(val: number|string) {  
+  return typeof val === 'string' && !isNaN(parseFloat(val)) ? parseFloat(val) : val;  
+}  
+// 添加entity点
+export function addEntityPoint(msg:IAddPoint) {
+  let point = dataSource.value.entities.add({
+    tag: msg,
+    position: Cesium.Cartesian3.fromDegrees((outputFloat(msg.lon) as number), (outputFloat(msg.lat) as number)),
+    point: {
+      pixelSize: 100,
+      color: new Cesium.Color(0,1,0,1),
+      verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+      disableDepthTestDistance: Number.POSITIVE_INFINITY
+    }
+  })
+}
+
+// 添加entity线
+export function addEntityLine(){
+  //添加实体
+  const line = dataSource.value.entities.add({
+    polyline: {
+      show: true,
+      positions: Cesium.Cartesian3.fromDegreesArray([116.39, 39.91, 116.40, 39.91]),
+      width: 5,
+      material:new Cesium.Color(0,0,1,1)
+    }
+  })
+  console.log("line",line)
+  viewer.value.trackedEntity = line;
+}
+
+// 添加entity面
+export function addEntityPlane(){
+  //添加实体
+  const plane = dataSource.value.entities.add({
+    position: Cesium.Cartesian3.fromDegrees(116.391, 39.914, 1000),
+    plane: {
+      plane: new Cesium.Plane(Cesium.Cartesian3.UNIT_Z, 0),
+      dimensions: new Cesium.Cartesian2(400, 300), //面的长度和宽度
+      material: Cesium.Color.RED.withAlpha(0.5), //显示材质
+      outline: true, //显示边框
+      outlineColor: Cesium.Color.BLACK
+    }
+  })
+  viewer.value.trackedEntity = plane;
 }

@@ -14,11 +14,16 @@
             <el-menu-item index="/index/tdt">天地图</el-menu-item>
             <el-menu-item index="/index/gaode">高德地图</el-menu-item>
           </el-sub-menu>
-          <el-sub-menu index="2">
-            <template #title>矢量数据添加</template>
-            <el-menu-item index="2-1">点</el-menu-item>
-            <el-menu-item index="2-2">线</el-menu-item>
-            <el-menu-item index="2-3">面</el-menu-item>
+          <el-sub-menu index="/entity">
+            <template #title>entity添加</template>
+            <el-menu-item index="/entity/addPoint">加点</el-menu-item>
+            <el-menu-item index="/entity/addLine">加线</el-menu-item>
+            <el-menu-item index="/entity/addPlane">加面</el-menu-item>
+          </el-sub-menu>
+          <el-sub-menu index="/entity">
+            <template #title>测量</template>
+            <el-menu-item index="/entity/addPoint">测距</el-menu-item>
+            <el-menu-item index="/entity/addLine">测面</el-menu-item>
           </el-sub-menu>
         </el-menu>
       </el-aside>
