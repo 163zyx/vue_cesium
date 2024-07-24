@@ -43,6 +43,24 @@ const routes: Array<RouteRecordRaw>= [
       },
     ]
   },
+  {
+    path: '/measure',
+    component: () => import('@/views/Home.vue'),
+    children: [
+      {
+        path: 'realTimeDisplay',
+        component: () => import('@/views/realTimeDisplay.vue'),
+      },      
+      {
+        path: 'addLine',
+        component: () => import('@/views/addLine.vue'),
+      },
+      {
+        path: 'addPlane',
+        component: () => import('@/views/addPlane.vue'),
+      },
+    ]
+  },
 ]
 
 const router = createRouter({

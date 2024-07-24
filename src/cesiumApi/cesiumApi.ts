@@ -31,8 +31,8 @@ export function loadGlobe(val:string) {
 
 // 飞行函数的参数配置
 interface IflyToOptions {
-  lon: number;
-  lat: number;
+  lon?: number;
+  lat?: number;
   alt?: number;
   heading?: number;
   pitch?: number;
