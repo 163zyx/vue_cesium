@@ -20,8 +20,9 @@
             <el-menu-item index="/entity/addLine">加线</el-menu-item>
             <el-menu-item index="/entity/addPlane">加面</el-menu-item>
           </el-sub-menu>
-          <el-sub-menu index="/entity">
+          <el-sub-menu index="/measure">
             <template #title>测量</template>
+            <el-menu-item index="/measure/realTimeDisplay">实时显示经纬度</el-menu-item>
             <el-menu-item index="/entity/addPoint">测距</el-menu-item>
             <el-menu-item index="/entity/addLine">测面</el-menu-item>
           </el-sub-menu>
