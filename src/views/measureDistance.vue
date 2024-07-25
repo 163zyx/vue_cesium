@@ -164,7 +164,6 @@ function draw (type:string) {
       // 左键单击开始画线
       handler.setInputAction(function (click:any) {
         let earthPosition = viewer.value.scene.pickPosition(click.position)
-        console.log("earthPosition",earthPosition)
         if (Cesium.defined(earthPosition)) {
           if (activeShapePoints.length === 0) {
             floatingPoint = drawPoint(viewer,earthPosition)
@@ -211,7 +210,7 @@ function draw (type:string) {
             if(!handler.isDestroyed()){
               handler.destroy()
               tempPoints = [] // 清空点位记录
-              floatingPoint = undefined
+              // floatingPoint = undefined //这个地方有问题
               activeShape = undefined
               activeShapePoints = []
             }
