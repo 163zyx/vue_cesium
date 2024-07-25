@@ -207,7 +207,6 @@ export function getMidpoint(start: Cesium.Cartesian3, end: Cesium.Cartesian3) {
   let geodesic = new Cesium.EllipsoidGeodesic()
   geodesic.setEndPoints(startPoint, endPoint)
   let geoPoint = geodesic.interpolateUsingFraction(0.5)
-  console.log(Cesium.Ellipsoid.WGS84.cartographicToCartesian(geoPoint))
   return Cesium.Ellipsoid.WGS84.cartographicToCartesian(geoPoint)
 }
 export function addLabel(viewer: {value: any} ,midPoint: Object, labelLength:string) {
@@ -322,7 +321,7 @@ export function drawPolyline(viewer: {value: any},positions: Cesium.Cartesian3[]
     }
   })
 }
-export function drawPolygon(viewer: {value: any},positions: Cesium.Cartesian3[]) {
+export function drawPolygon(viewer: {value: any},positions: any) {
   // let viewer = this.viewer
   if (positions.length < 2) return
   return viewer.value.entities.add({
@@ -337,3 +336,7 @@ export function drawPolygon(viewer: {value: any},positions: Cesium.Cartesian3[])
   })
 }
 
+export interface IMovement {
+  startPosition: Cesium.Cartesian2,
+  endPosition: Cesium.Cartesian2,
+}

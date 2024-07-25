@@ -26,16 +26,17 @@ import {
   addLabel,
   drawPolygon,
   drawPolyline,
-  addArea,
+  addArea, 
+  type IMovement,
 } from "@/cesiumApi/cesiumApi"
 
-let tempEntities = reactive([])
+let tempEntities = reactive(<any>[])
 let pointNum:number = 0
-let floatingPoint = undefined
+let floatingPoint:any = undefined
 let activeShape = undefined
 let position = []
-let tempPoints = []
-let activeShapePoints = []
+let tempPoints = <any>[]
+let activeShapePoints = <any>[]
 
 // 角度
 function pointAngle (point1: Cesium.Cartesian3, point2:Cesium.Cartesian3, point3: Cesium.Cartesian3) {
@@ -54,14 +55,11 @@ function getArea(positions: Cesium.Cartesian3[]) {
     let j = (i + 1) % positions.length
     let k = (i + 2) % positions.length
     let totalAngle = pointAngle(positions[i], positions[j], positions[k])
-    console.log("getLength(positions[j], positions[0])",getLength(positions[j], positions[0]))
     let tempLength1: number = parseFloat(getLength(positions[j], positions[0])) //这里有问题 需要调整
     let tempLength2: number = parseFloat(getLength(positions[k], positions[0])) //这里有问题 需要调整
     res += tempLength1 * tempLength2 * Math.sin(totalAngle) / 2
   }
-  res = res.toFixed(2)
-  // console.log(res)
-  res = parseFloat(res)
+  res = parseFloat(res.toFixed(2))
   // console.log(Math.abs(res))
   return Math.abs(res)
 }
@@ -94,7 +92,7 @@ function draw (type:string) {
       // 取消鼠标双击事件
       viewer.value.cesiumWidget.screenSpaceEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK)
       // 监听鼠标移动
-      handler.setInputAction(function (movement) {
+      handler.setInputAction((movement:IMovement) => {
         if (Cesium.defined(floatingPoint)) {
           let newPosition = viewer.value.scene.pickPosition(movement.endPosition)
           if (Cesium.defined(newPosition)) {
@@ -105,7 +103,7 @@ function draw (type:string) {
         }
       }, Cesium.ScreenSpaceEventType.MOUSE_MOVE)
       // 左键单击开始画线
-      handler.setInputAction(function (click) {
+      handler.setInputAction(function (click:any) {
         let earthPosition = viewer.value.scene.pickPosition(click.position)
         if (Cesium.defined(earthPosition)) {
           floatingPoint = drawPoint(viewer,earthPosition)
@@ -133,18 +131,19 @@ function draw (type:string) {
         }
       }, Cesium.ScreenSpaceEventType.LEFT_CLICK)
       // 右键单击结束画线
-      handler.setInputAction(function (click) {
+      handler.setInputAction(function (click:any) {
         // console.log(that.pointNum)
         activeShapePoints.pop()
         viewer.value.entities.remove(activeShapePoints)
         viewer.value.entities.remove(floatingPoint)
         tempPoints = [] // 清空点位记录
-        handler.destroy()
-        handler = null
+        // 销毁监听器
+        if(!handler.isDestroyed()){
+          handler.destroy()
+        }
         floatingPoint = undefined
         activeShape = undefined
         activeShapePoints = []
-        // console.log(that.pointNum)
       }, Cesium.ScreenSpaceEventType.RIGHT_CLICK)
       break
     // 绘制面
@@ -152,7 +151,7 @@ function draw (type:string) {
       // 取消鼠标双击事件
       viewer.value.cesiumWidget.screenSpaceEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK)
       // 监听鼠标移动
-      handler.setInputAction(function (movement) {
+      handler.setInputAction(function (movement:IMovement) {
         if (Cesium.defined(floatingPoint)) {
           let newPosition = viewer.value.scene.pickPosition(movement.endPosition)
           if (Cesium.defined(newPosition)) {
@@ -163,7 +162,7 @@ function draw (type:string) {
         }
       }, Cesium.ScreenSpaceEventType.MOUSE_MOVE)
       // 左键单击开始画线
-      handler.setInputAction(function (click) {
+      handler.setInputAction(function (click:any) {
         let earthPosition = viewer.value.scene.pickPosition(click.position)
         if (Cesium.defined(earthPosition)) {
           if (activeShapePoints.length === 0) {
@@ -193,7 +192,7 @@ function draw (type:string) {
         }
       }, Cesium.ScreenSpaceEventType.LEFT_CLICK)
       // 右键单击结束画面
-      handler.setInputAction(function (click) {
+      handler.setInputAction(function (click:any) {
         // 选择一个椭球或地图
         let cartesian = viewer.value.camera.pickEllipsoid(click.position, viewer.value.scene.globe.ellipsoid)
         if (cartesian) {
@@ -208,8 +207,13 @@ function draw (type:string) {
             let pointArea = getArea(tempPoints)
             addArea(viewer,JSON.stringify(pointArea), tempPoints)
             tempEntities.push(tempPoints)
-            handler.destroy()
-            handler = null
+            if(!handler.isDestroyed()){
+              handler.destroy()
+              tempPoints = [] // 清空点位记录
+              // floatingPoint = undefined //这个地方有问题
+              activeShape = undefined
+              activeShapePoints = []
+            }
           }
         }
         activeShapePoints.pop()
@@ -220,19 +224,6 @@ function draw (type:string) {
       }, Cesium.ScreenSpaceEventType.RIGHT_CLICK)
       break
   }
-}
-
-
-function measureLineSpace() {
-
-}
-
-function measureAreaSpace() {
-
-}
-
-function removeMeasure() {
-
 }
 
 onMounted(() => {
