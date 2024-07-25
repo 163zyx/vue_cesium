@@ -8,8 +8,11 @@ module.exports = {
     'eslint:recommended',
     '@vue/eslint-config-typescript'
   ],
+  parser: 'vue-eslint-parser',
   parserOptions: {
-    ecmaVersion: 'latest'
+    ecmaVersion: "latest",
+    sourceType: "module",
+    parser: "@typescript-eslint/parser",
   },
   rules: {
     // 'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
