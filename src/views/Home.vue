@@ -23,7 +23,7 @@
           <el-sub-menu index="/measure">
             <template #title>测量</template>
             <el-menu-item index="/measure/realTimeDisplay">实时显示经纬度</el-menu-item>
-            <el-menu-item index="/entity/addPoint">测距</el-menu-item>
+            <el-menu-item index="/measure/measureDistance">测距</el-menu-item>
             <el-menu-item index="/entity/addLine">测面</el-menu-item>
           </el-sub-menu>
         </el-menu>

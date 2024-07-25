@@ -52,8 +52,8 @@ const routes: Array<RouteRecordRaw>= [
         component: () => import('@/views/realTimeDisplay.vue'),
       },      
       {
-        path: 'addLine',
-        component: () => import('@/views/addLine.vue'),
+        path: 'measureDistance',
+        component: () => import('@/views/measureDistance.vue'),
       },
       {
         path: 'addPlane',
