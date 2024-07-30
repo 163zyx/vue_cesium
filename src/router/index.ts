@@ -61,6 +61,24 @@ const routes: Array<RouteRecordRaw>= [
       },
     ]
   },
+  {
+    path: '/weather',
+    component: () => import('@/views/Home.vue'),
+    children: [
+      {
+        path: 'rain',
+        component: () => import('@/views/rain.vue'),
+      },      
+      {
+        path: 'snow',
+        component: () => import('@/views/snow.vue'),
+      },
+      {
+        path: 'fog',
+        component: () => import('@/views/fog.vue'),
+      },
+    ]
+  },
 ]
 
 const router = createRouter({

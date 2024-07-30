@@ -1,8 +1,8 @@
 <template>
-	<div id="globe"></div>
+  <div id="globe"></div>
   <div class="mouseMove">
     <!-- 空间量算 -->
-    <div id="toolbar" class="param-container tool-bar" >
+    <div id="toolbar" class="param-container tool-bar">
       <button @click="draw('Polyline')">标点测距</button>
       <button @click="draw('Polygon')">标点测面</button>
       <button @click="clearAllDrawn()">清空数据</button>
@@ -13,12 +13,12 @@
 <script setup lang="ts">
 import * as Cesium from "cesium";
 import { onMounted, reactive } from "vue";
-import { 
-  viewer, 
-  loadGlobe, 
-  flyTo, 
-  loadDataSource, 
-  Bearing, 
+import {
+  viewer,
+  loadGlobe,
+  flyTo,
+  loadDataSource,
+  Bearing,
   getLength,
   drawPoint,
   getMidpoint,
@@ -26,20 +26,20 @@ import {
   addLabel,
   drawPolygon,
   drawPolyline,
-  addArea, 
+  addArea,
   type IMovement,
 } from "@/cesiumApi/cesiumApi"
 
 let tempEntities = reactive(<any>[])
-let pointNum:number = 0
-let floatingPoint:any = undefined
+let pointNum: number = 0
+let floatingPoint: any = undefined
 let activeShape = undefined
 let position = []
 let tempPoints = <any>[]
 let activeShapePoints = <any>[]
 
 // 角度
-function pointAngle (point1: Cesium.Cartesian3, point2:Cesium.Cartesian3, point3: Cesium.Cartesian3) {
+function pointAngle(point1: Cesium.Cartesian3, point2: Cesium.Cartesian3, point3: Cesium.Cartesian3) {
   let bearing21 = Bearing(point2, point1)
   let bearing23 = Bearing(point2, point3)
   let angle: number = bearing21 - bearing23
@@ -50,7 +50,7 @@ function pointAngle (point1: Cesium.Cartesian3, point2:Cesium.Cartesian3, point3
 }
 // 获取面积
 function getArea(positions: Cesium.Cartesian3[]) {
-  let res : number = 0
+  let res: number = 0
   for (let i = 0; i < positions.length - 2; i++) {
     let j = (i + 1) % positions.length
     let k = (i + 2) % positions.length
@@ -64,7 +64,7 @@ function getArea(positions: Cesium.Cartesian3[]) {
   return Math.abs(res)
 }
 /* 清除实体 */
-function clearAllDrawn () {
+function clearAllDrawn() {
   tempEntities = []
   pointNum = 0
   viewer.value.entities.removeAll()
@@ -72,7 +72,7 @@ function clearAllDrawn () {
 
 /* 根据类型绘制对象
 * @param type point polyline polygon */
-function draw (type:string) {
+function draw(type: string) {
   // let viewer = viewer
   // let pointNum = this.pointNum
   // console.log(pointNum)
@@ -92,7 +92,7 @@ function draw (type:string) {
       // 取消鼠标双击事件
       viewer.value.cesiumWidget.screenSpaceEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK)
       // 监听鼠标移动
-      handler.setInputAction((movement:IMovement) => {
+      handler.setInputAction((movement: IMovement) => {
         if (Cesium.defined(floatingPoint)) {
           let newPosition = viewer.value.scene.pickPosition(movement.endPosition)
           if (Cesium.defined(newPosition)) {
@@ -103,10 +103,10 @@ function draw (type:string) {
         }
       }, Cesium.ScreenSpaceEventType.MOUSE_MOVE)
       // 左键单击开始画线
-      handler.setInputAction(function (click:any) {
+      handler.setInputAction(function (click: any) {
         let earthPosition = viewer.value.scene.pickPosition(click.position)
         if (Cesium.defined(earthPosition)) {
-          floatingPoint = drawPoint(viewer,earthPosition)
+          floatingPoint = drawPoint(viewer, earthPosition)
         }
         // 获取位置信息
         // 从相机位置创建一条射线，这条射线通过世界中movement.position像素所在的坐标,返回Cartesian3坐标
@@ -117,28 +117,28 @@ function draw (type:string) {
         pointNum += 1
         let tempLength = tempPoints.length // 记录点数
         // 调用绘制点的接口
-        let point = drawPointLabel(viewer,tempPoints[tempPoints.length - 1], JSON.stringify(pointNum))
+        let point = drawPointLabel(viewer, tempPoints[tempPoints.length - 1], JSON.stringify(pointNum))
         tempEntities.push(point)
         // 存在超过一个点时
         if (tempLength > 1) {
           // 绘制线
           let pointLength = getLength(tempPoints[tempPoints.length - 2], tempPoints[tempPoints.length - 1])
           let midPosition = getMidpoint(tempPoints[tempPoints.length - 2], tempPoints[tempPoints.length - 1])
-          let pointline = drawPolyline(viewer,[tempPoints[tempPoints.length - 2], tempPoints[tempPoints.length - 1]])
-          let pointLabel = addLabel(viewer,midPosition, pointLength)
+          let pointline = drawPolyline(viewer, [tempPoints[tempPoints.length - 2], tempPoints[tempPoints.length - 1]])
+          let pointLabel = addLabel(viewer, midPosition, pointLength)
           tempEntities.push(pointline) // 保存记录
           tempEntities.push(pointLabel)
         }
       }, Cesium.ScreenSpaceEventType.LEFT_CLICK)
       // 右键单击结束画线
-      handler.setInputAction(function (click:any) {
+      handler.setInputAction(function (click: any) {
         // console.log(that.pointNum)
         activeShapePoints.pop()
         viewer.value.entities.remove(activeShapePoints)
         viewer.value.entities.remove(floatingPoint)
         tempPoints = [] // 清空点位记录
         // 销毁监听器
-        if(!handler.isDestroyed()){
+        if (!handler.isDestroyed()) {
           handler.destroy()
         }
         floatingPoint = undefined
@@ -151,7 +151,7 @@ function draw (type:string) {
       // 取消鼠标双击事件
       viewer.value.cesiumWidget.screenSpaceEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK)
       // 监听鼠标移动
-      handler.setInputAction(function (movement:IMovement) {
+      handler.setInputAction(function (movement: IMovement) {
         if (Cesium.defined(floatingPoint)) {
           let newPosition = viewer.value.scene.pickPosition(movement.endPosition)
           if (Cesium.defined(newPosition)) {
@@ -162,16 +162,16 @@ function draw (type:string) {
         }
       }, Cesium.ScreenSpaceEventType.MOUSE_MOVE)
       // 左键单击开始画线
-      handler.setInputAction(function (click:any) {
+      handler.setInputAction(function (click: any) {
         let earthPosition = viewer.value.scene.pickPosition(click.position)
         if (Cesium.defined(earthPosition)) {
           if (activeShapePoints.length === 0) {
-            floatingPoint = drawPoint(viewer,earthPosition)
+            floatingPoint = drawPoint(viewer, earthPosition)
             activeShapePoints.push(earthPosition)
             const dynamicPositions = new Cesium.CallbackProperty(function () {
               return new Cesium.PolygonHierarchy(activeShapePoints)
             }, false)
-            activeShape = drawPolygon(viewer,dynamicPositions)
+            activeShape = drawPolygon(viewer, dynamicPositions)
           }
           activeShapePoints.push(earthPosition)
         }
@@ -182,17 +182,17 @@ function draw (type:string) {
         let tempLength = tempPoints.length // 记录点数
         pointNum += 1
         // 调用绘制点的接口
-        let point = drawPointLabel(viewer,tempPoints[tempPoints.length - 1], JSON.stringify(pointNum))
+        let point = drawPointLabel(viewer, tempPoints[tempPoints.length - 1], JSON.stringify(pointNum))
         tempEntities.push(point)
         // 存在超过一个点时
         if (tempLength > 1) {
           // 绘制线
-          let pointline = drawPolyline(viewer,[tempPoints[tempPoints.length - 2], tempPoints[tempPoints.length - 1]])
+          let pointline = drawPolyline(viewer, [tempPoints[tempPoints.length - 2], tempPoints[tempPoints.length - 1]])
           tempEntities.push(pointline) // 保存记录
         }
       }, Cesium.ScreenSpaceEventType.LEFT_CLICK)
       // 右键单击结束画面
-      handler.setInputAction(function (click:any) {
+      handler.setInputAction(function (click: any) {
         // 选择一个椭球或地图
         let cartesian = viewer.value.camera.pickEllipsoid(click.position, viewer.value.scene.globe.ellipsoid)
         if (cartesian) {
@@ -201,13 +201,13 @@ function draw (type:string) {
             alert('闭合操作需要至少3个点嗷')
           } else {
             // 闭合最后一条线
-            let pointline = drawPolyline(viewer,[tempPoints[0], tempPoints[tempPoints.length - 1]])
+            let pointline = drawPolyline(viewer, [tempPoints[0], tempPoints[tempPoints.length - 1]])
             tempEntities.push(pointline)
-            drawPolygon(viewer,tempPoints)
+            drawPolygon(viewer, tempPoints)
             let pointArea = getArea(tempPoints)
-            addArea(viewer,JSON.stringify(pointArea), tempPoints)
+            addArea(viewer, JSON.stringify(pointArea), tempPoints)
             tempEntities.push(tempPoints)
-            if(!handler.isDestroyed()){
+            if (!handler.isDestroyed()) {
               handler.destroy()
               tempPoints = [] // 清空点位记录
               // floatingPoint = undefined //这个地方有问题
@@ -228,18 +228,17 @@ function draw (type:string) {
 
 onMounted(() => {
   loadGlobe("globe")
-	loadDataSource()
+  loadDataSource()
   flyTo({})
-
-
-});
+})
 </script>
 
 <style lang="scss" scoped>
 #globe {
-	width: 100%;
-	height: 100%;
+  width: 100%;
+  height: 100%;
 }
+
 .mouseMove {
   background: #303336;
   position: absolute;

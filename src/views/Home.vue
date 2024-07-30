@@ -26,6 +26,12 @@
             <el-menu-item index="/measure/measureDistance">测距</el-menu-item>
             <el-menu-item index="/entity/addLine">测面</el-menu-item>
           </el-sub-menu>
+          <el-sub-menu index="/weather">
+            <template #title>天气效果</template>
+            <el-menu-item index="/weather/rain">雨</el-menu-item>
+            <el-menu-item index="/weather/snow">雪</el-menu-item>
+            <el-menu-item index="/weather/fog">雾</el-menu-item>
+          </el-sub-menu>
         </el-menu>
       </el-aside>
       <el-container>
