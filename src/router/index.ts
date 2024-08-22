@@ -79,6 +79,10 @@ const routes: Array<RouteRecordRaw>= [
       },
     ]
   },
+  {
+    path: '/talkroom',
+    component: () => import('@/views/Home.vue'),
+  },
 ]
 
 const router = createRouter({
