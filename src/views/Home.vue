@@ -32,6 +32,9 @@
             <el-menu-item index="/weather/snow">雪</el-menu-item>
             <el-menu-item index="/weather/fog">雾</el-menu-item>
           </el-sub-menu>
+          <el-menu-item index="/talkroom">
+            <span>聊天室</span>
+          </el-menu-item>
         </el-menu>
       </el-aside>
       <el-container>
