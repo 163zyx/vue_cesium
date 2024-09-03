@@ -32,13 +32,15 @@
             <el-menu-item index="/weather/snow">雪</el-menu-item>
             <el-menu-item index="/weather/fog">雾</el-menu-item>
           </el-sub-menu>
-          <el-menu-item index="/talkroom">
+          <el-menu-item index="/talkroom/talk">
             <span>聊天室</span>
           </el-menu-item>
         </el-menu>
       </el-aside>
       <el-container>
-        <el-header class="layout-header">Header</el-header>
+        <el-header class="layout-header">
+          <el-avatar style="margin-right: 20px;" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
+        </el-header>
         <el-main class="layout-main">
           <router-view />
         </el-main>
@@ -71,6 +73,10 @@
   .layout-header{
     color: black;
     height: 50px;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: row;
+    align-items: center;
     // background-color: cadetblue ;
   }
   .layout-main{

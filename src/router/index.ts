@@ -82,6 +82,12 @@ const routes: Array<RouteRecordRaw>= [
   {
     path: '/talkroom',
     component: () => import('@/views/Home.vue'),
+    children: [
+      {
+        path: 'talk',
+        component: () => import('@/views/talk.vue'),
+      },      
+    ]
   },
 ]
 
