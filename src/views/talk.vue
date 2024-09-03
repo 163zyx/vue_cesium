@@ -4,12 +4,12 @@
       <div class="left-talk">
         <el-avatar style="margin-right: 20px;" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
         <el-card style="width: 480px" shadow="always">
-          这里是聊天室
+          {{ askMsg }}
         </el-card>
       </div>
       <div class="right-talk">
         <el-card style="width: 480px" shadow="always">
-          这里是聊天室
+          {{ returnMsg }}
         </el-card>
         <el-avatar style="margin-left: 20px;" src="https://pic.aigexing.net/uploads/6/1253/2097803297/9123380427/63937713.jpg" />
       </div>
@@ -26,8 +26,8 @@
           placeholder="请输入聊天内容"
           @change=""
         />
-        <el-button type="primary" style="margin-left: 20px;" @click="getList">发送</el-button>
-        <el-button type="primary" style="margin-left: 10px;">清空聊天</el-button>
+        <el-button type="primary" style="margin-left: 20px;" :disabled="chatText === ''" @click="getList">发送</el-button>
+        <el-button type="primary" style="margin-left: 10px;" @click="clearChat">清空聊天</el-button>
       </div>
     </div>
   </div>
@@ -36,21 +36,36 @@
 <script setup lang="ts">
 
 import talkAxios from "@/axios/axios"
-import { onMounted, ref } from "vue";
+import { onMounted, reactive, ref } from "vue";
 
 const chatText = ref('')
+const askMsg = ref('')
+const returnMsg = ref('')
 async function getList() {
-  let body = {
-    "model": "gpt-4o-mini",
-    "messages": [
-      {
-        "role": "user",
-        "content": "9.11和9.9谁大,9.11大于9.9是错的还是对的?"
-      }
-    ]
+  returnMsg.value = ''
+  if(chatText.value != ''){
+    let body = {
+      "model": "gpt-4o-mini",
+      "messages": [
+        {
+          "role": "user",
+          "content": chatText.value
+        }
+      ]
+    }
+    askMsg.value = chatText.value
+    // 清空文字
+    chatText.value = ''
+    let res =  await talkAxios.post("/v1/chat/completions",body)
+    console.log("后端",(res as any).choices[0].message)
+    returnMsg.value = (res as any).choices[0].message.content
   }
-  let res =  await talkAxios.post("/v1/chat/completions",body)
-  console.log("后端",res)
+
+}
+function clearChat() {
+  chatText.value = ''
+  askMsg.value = ''
+  returnMsg.value = ''
 }
 onMounted(() => {
 

@@ -7,7 +7,7 @@ const talkAxios = axios.create({
   headers: {
     "Content-Type": "application/json"
   },
-  timeout: 1000,
+  timeout: 10000,
 })
 
 const token = "Bearer sk-txEKmVgU1uIDEz3KO0ezSgBWxvGuX54D3CYvecSXXsAf2jhR"
