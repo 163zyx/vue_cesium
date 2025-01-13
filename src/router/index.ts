@@ -9,7 +9,8 @@ const routes: Array<RouteRecordRaw>= [
   },
   {
     path: '/index',
-    component: () => import('@/views/Home.vue'),
+    // component: () => import('@/views/Home.vue'),
+    component: () => import('@/views/educationHome.vue'),
     children: [
       {
         path: 'cesium',
