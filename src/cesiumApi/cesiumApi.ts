@@ -189,6 +189,13 @@ export function addEntityPlane(){
   viewer.value.trackedEntity = plane;
 }
 
+// 计算一下点击点位的经纬度
+export function getClickPoint(viewer: {value: any}, position: Cesium.Cartesian3) {
+  let clickPoint = viewer.value.scene.pick(viewer.value.cesiumWidget.canvas.clientX, viewer.value.cesiumWidget.canvas.clientY)
+  console.log("clickPoint", clickPoint)
+  return clickPoint
+}
+
 /* 空间两点距离计算函数 */
 export function getLength(start: Cesium.Cartesian3, end: Cesium.Cartesian3) {
   // 将起点与终点位置信息从笛卡尔坐标形式转换为Cartographic形式
