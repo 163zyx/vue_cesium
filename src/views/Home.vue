@@ -13,6 +13,7 @@
             <el-menu-item index="/index/cesium">地球初始化</el-menu-item>
             <el-menu-item index="/index/tdt">天地图</el-menu-item>
             <el-menu-item index="/index/gaode">高德地图</el-menu-item>
+            <el-menu-item index="/index/heatmap">热力图</el-menu-item>
           </el-sub-menu>
           <el-sub-menu index="/entity">
             <template #title>entity添加</template>

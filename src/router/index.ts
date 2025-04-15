@@ -24,6 +24,10 @@ const routes: Array<RouteRecordRaw>= [
         path: 'gaode',
         component: () => import('@/views/GdViewer.vue'),
       },
+      {
+        path: 'heatmap',
+        component: () => import('@/views/HeatmapCesium.vue'),
+      },
     ]
   },
   {
