@@ -51,7 +51,7 @@ const convertToScreenPosition = (
     : null;
 };
 
-// 创建热力图
+// // 创建热力图
 const createHeatmap = () => {
   if (!viewer) return;
 
@@ -112,7 +112,6 @@ const updateHeatmapData = (data: HeatmapData<{ x: number; y: number; value: numb
 onMounted(() => {
   initCesium();
   if (viewer) {
-    debugger
     createHeatmap();
     viewer.zoomTo(viewer.entities);
   }
